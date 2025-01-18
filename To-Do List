@@ -1,0 +1,117 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class ToDoList implements ActionListener {
+
+    JFrame frame;
+    JTextField textfield;
+    JTextArea taskTextArea;
+    JButton[] functionButtons = new JButton[3];
+    JButton ClearButton, AddButton, DeleteButton;
+    JPanel panel;
+    Font myFont = new Font("Arial", Font.BOLD, 18);
+    Font titleFont = new Font("Arial", Font.BOLD, 30);
+    JLabel TitleLabel, TaskLabel;
+
+    ToDoList() {
+
+        // Frame Setup
+        frame = new JFrame("To-Do List");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(500, 500);
+        frame.setLayout(null);
+        frame.setResizable(false);
+        frame.getContentPane().setBackground(new Color(240, 248, 255)); // Light blue background
+
+        // Title Label
+        TitleLabel = new JLabel("The To-Do List");
+        TitleLabel.setBounds(120, 20, 300, 40);
+        TitleLabel.setFont(titleFont);
+        TitleLabel.setForeground(new Color(30, 144, 255)); // Dodger Blue
+        frame.add(TitleLabel);
+
+        // Task Label
+        TaskLabel = new JLabel("Enter Task Here:");
+        TaskLabel.setBounds(30, 100, 200, 25);
+        TaskLabel.setFont(myFont);
+        TaskLabel.setForeground(new Color(70, 130, 180)); // Steel Blue
+        frame.add(TaskLabel);
+
+        // Text Field
+        textfield = new JTextField();
+        textfield.setBounds(30, 130, 180, 30);
+        textfield.setFont(myFont);
+        textfield.setForeground(new Color(25, 25, 112)); // Midnight Blue
+        textfield.setBackground(new Color(230, 230, 250)); // Lavender
+        frame.add(textfield);
+
+        // Task Display Area
+        taskTextArea = new JTextArea();
+        taskTextArea.setFont(myFont);
+        taskTextArea.setEditable(false);
+        taskTextArea.setForeground(new Color(0, 100, 0)); // Dark Green
+        taskTextArea.setBackground(new Color(245, 255, 250)); // Mint Cream
+
+        JScrollPane scrollPane = new JScrollPane(taskTextArea);
+        scrollPane.setBounds(250, 130, 200, 250);
+        scrollPane.setBorder(BorderFactory.createLineBorder(new Color(0, 128, 128), 2)); // Teal border
+        frame.add(scrollPane);
+
+        // Buttons
+        ClearButton = new JButton("Clear");
+        AddButton = new JButton("Add");
+        DeleteButton = new JButton("Delete");
+
+        functionButtons[0] = AddButton;
+        functionButtons[1] = DeleteButton;
+        functionButtons[2] = ClearButton;
+
+        for (int i = 0; i < 3; i++) {
+            functionButtons[i].addActionListener(this);
+            functionButtons[i].setFont(myFont);
+            functionButtons[i].setFocusable(false);
+            functionButtons[i].setBackground(new Color(30, 144, 255)); // Dodger Blue
+            functionButtons[i].setForeground(Color.WHITE);
+            functionButtons[i].setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        }
+
+        // Panel for Buttons
+        panel = new JPanel();
+        panel.setBounds(30, 180, 180, 150);
+        panel.setLayout(new GridLayout(3, 1, 10, 10));
+        panel.setBackground(new Color(240, 248, 255)); // Match frame background
+
+        panel.add(AddButton);
+        panel.add(DeleteButton);
+        panel.add(ClearButton);
+
+        frame.add(panel);
+        frame.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        ToDoList list = new ToDoList();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == AddButton) {
+            String task = textfield.getText().trim();
+            if (!task.isEmpty()) {
+                taskTextArea.append(task + "\n"); // Add task to display
+                textfield.setText(""); // Clear input field
+            }
+        } else if (e.getSource() == ClearButton) {
+            taskTextArea.setText(""); // Clear all tasks
+        } else if (e.getSource() == DeleteButton) {
+            String[] tasks = taskTextArea.getText().split("\n");
+            if (tasks.length > 0) {
+                taskTextArea.setText(""); // Clear all tasks
+                for (int i = 0; i < tasks.length - 1; i++) {
+                    taskTextArea.append(tasks[i] + "\n"); // Re-add all but last task
+                }
+            }
+        }
+    }
+}
