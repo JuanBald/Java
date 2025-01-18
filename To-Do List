@@ -22,40 +22,39 @@ public class ToDoList implements ActionListener {
         frame.setSize(500, 500);
         frame.setLayout(null);
         frame.setResizable(false);
-        frame.getContentPane().setBackground(new Color(240, 248, 255)); // Light blue background
+        frame.getContentPane().setBackground(new Color(240, 248, 255)); 
 
         // Title Label
         TitleLabel = new JLabel("The To-Do List");
         TitleLabel.setBounds(120, 20, 300, 40);
         TitleLabel.setFont(titleFont);
-        TitleLabel.setForeground(new Color(30, 144, 255)); // Dodger Blue
+        TitleLabel.setForeground(new Color(30, 144, 255)); 
         frame.add(TitleLabel);
 
         // Task Label
         TaskLabel = new JLabel("Enter Task Here:");
         TaskLabel.setBounds(30, 100, 200, 25);
         TaskLabel.setFont(myFont);
-        TaskLabel.setForeground(new Color(70, 130, 180)); // Steel Blue
+        TaskLabel.setForeground(new Color(70, 130, 180)); 
         frame.add(TaskLabel);
 
         // Text Field
         textfield = new JTextField();
         textfield.setBounds(30, 130, 180, 30);
         textfield.setFont(myFont);
-        textfield.setForeground(new Color(25, 25, 112)); // Midnight Blue
-        textfield.setBackground(new Color(230, 230, 250)); // Lavender
+        textfield.setForeground(new Color(25, 25, 112)); 
+        textfield.setBackground(new Color(230, 230, 250)); 
         frame.add(textfield);
 
         // Task Display Area
         taskTextArea = new JTextArea();
         taskTextArea.setFont(myFont);
         taskTextArea.setEditable(false);
-        taskTextArea.setForeground(new Color(0, 100, 0)); // Dark Green
-        taskTextArea.setBackground(new Color(245, 255, 250)); // Mint Cream
-
+        taskTextArea.setForeground(new Color(0, 100, 0)); 
+        taskTextArea.setBackground(new Color(245, 255, 250)); 
         JScrollPane scrollPane = new JScrollPane(taskTextArea);
         scrollPane.setBounds(250, 130, 200, 250);
-        scrollPane.setBorder(BorderFactory.createLineBorder(new Color(0, 128, 128), 2)); // Teal border
+        scrollPane.setBorder(BorderFactory.createLineBorder(new Color(0, 128, 128), 2)); 
         frame.add(scrollPane);
 
         // Buttons
@@ -71,7 +70,7 @@ public class ToDoList implements ActionListener {
             functionButtons[i].addActionListener(this);
             functionButtons[i].setFont(myFont);
             functionButtons[i].setFocusable(false);
-            functionButtons[i].setBackground(new Color(30, 144, 255)); // Dodger Blue
+            functionButtons[i].setBackground(new Color(30, 144, 255)); 
             functionButtons[i].setForeground(Color.WHITE);
             functionButtons[i].setBorder(BorderFactory.createLineBorder(Color.WHITE));
         }
