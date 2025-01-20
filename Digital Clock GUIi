@@ -1,0 +1,103 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.text.SimpleDateFormat; // For formatting the date and time
+import java.util.Date;             // For working with the current date and time
+
+public class ClockGui implements ActionListener {
+
+    final int width = 400;
+    final int length = 600;
+    JFrame frame;
+    JTextField textfield;
+    JLabel clockLabel, DateLabel;
+    JButton[] numberButtons = new JButton[10];
+    JButton[] functionButtons = new JButton[9];
+    JButton MilitaryTimeButton, StandardTimeButton;
+    JPanel panel;
+    Font myFont = new Font("Arial", Font.PLAIN, 18);
+    
+    // Timer to update the clock
+    Timer clockTimer;
+    boolean is24HourFormat = true; 
+
+    ClockGui() {
+        frame = new JFrame("Clock Gui");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(null);
+        frame.setResizable(false);
+        frame.setSize(length, width);
+        frame.getContentPane().setBackground(Color.DARK_GRAY);
+
+        clockLabel = new JLabel(); 
+        clockLabel.setText(new SimpleDateFormat("HH:mm:ss a").format(new Date()));
+        clockLabel.setBounds(120, 100, 360, 80);
+        clockLabel.setFont(new Font("Arial", Font.BOLD, 60));
+        clockLabel.setForeground(Color.decode("#D9381E"));
+
+        DateLabel = new JLabel();
+        DateLabel.setBounds(135, 150, 360, 80);
+        DateLabel.setFont(new Font("Arial", Font.PLAIN, 40));
+        DateLabel.setForeground(Color.decode("#D9381E"));
+        DateLabel.setText(new SimpleDateFormat("MMMM dd, yyyy").format(new Date()));
+
+        MilitaryTimeButton = new JButton("24 Hours");
+        StandardTimeButton = new JButton("12 Hours");
+
+        functionButtons[0] = MilitaryTimeButton;
+        functionButtons[1] = StandardTimeButton;
+
+        for (int i = 0; i < 2; i++) {
+            functionButtons[i].addActionListener(this);
+            functionButtons[i].setFont(myFont);
+            functionButtons[i].setFocusable(false);
+            functionButtons[i].setBackground(Color.WHITE);
+            functionButtons[i].setForeground(Color.decode("#D9381E")); // Red text color
+            functionButtons[i].setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Optional: Add border with same color        
+        }
+
+        panel = new JPanel();
+        panel.setBounds(190, 250, 200, 70);
+        panel.setLayout(new GridLayout(1, 2, 0, 0));
+        panel.setBackground(Color.white);  // White background for the panel
+        panel.add(MilitaryTimeButton);
+        panel.add(StandardTimeButton);
+
+        frame.add(panel);
+        frame.add(DateLabel);
+        frame.add(clockLabel);
+        frame.setVisible(true);
+
+        // Initialize the timer to update the clock every second (1000ms)
+        clockTimer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Update the clock label based on the selected format
+                if (is24HourFormat) {
+                    clockLabel.setText(new SimpleDateFormat("HH:mm:ss a").format(new Date())); // 24-hour format
+                } else {
+                    clockLabel.setText(new SimpleDateFormat("hh:mm:ss a").format(new Date())); // 12-hour format
+                }
+            }
+        });
+        clockTimer.start(); // Start the timer
+    }
+
+    public static void main(String[] args) {
+        new ClockGui();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // Toggle between 24-hour and 12-hour formats when buttons are clicked
+        if (e.getSource() == MilitaryTimeButton) {
+            is24HourFormat = true; // Set to 24-hour format
+            MilitaryTimeButton.setBackground(Color.GRAY); // Indicate selection
+            StandardTimeButton.setBackground(Color.WHITE); // Reset other button
+        } else if (e.getSource() == StandardTimeButton) {
+            is24HourFormat = false; // Set to 12-hour format
+            StandardTimeButton.setBackground(Color.GRAY); // Indicate selection
+            MilitaryTimeButton.setBackground(Color.WHITE); // Reset other button
+        }
+    }
+}
